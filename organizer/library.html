@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>bbq buddy – Library</title>
+  <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+  <header class="header">
+    <h1 id="page-title">Library</h1>
+    <p class="subtitle">Verwalte Produkte für deine Events</p>
+  </header>
+
+  <!-- sticky Toolbar -->
+  <section class="toolbar toolbar--sticky" aria-label="Produktwerkzeuge">
+    <div class="toolbar-left">
+      <a href="#new-product" class="btn btn-primary">+ Neues Produkt</a>
+    </div>
+    <div class="toolbar-right">
+      <label for="search" class="visually-hidden">Suche</label>
+      <input id="search" type="search" placeholder="Suche nach Name" />
+
+      <label for="filter-category" class="visually-hidden">Kategorie</label>
+      <select id="filter-category">
+        <option value="">Kategorie: Alle</option>
+        <option>Hardware</option>
+        <option>Ausstattung</option>
+        <option>Verbrauch</option>
+      </select>
+
+      <label class="checkbox-inline">
+        <input type="checkbox" id="filter-standard"/>
+        Nur Standard
+      </label>
+
+      <label for="sort" class="visually-hidden">Sortieren</label>
+      <select id="sort" title="Sortieren">
+        <option value="name-asc">Name A–Z</option>
+        <option value="name-desc">Name Z–A</option>
+        <option value="cat-asc">Kategorie</option>
+        <option value="changed-desc">Zuletzt geändert</option>
+      </select>
+    </div>
+  </section>
+
+  <main class="layout">
+    <!-- Scrollbarer Listenbereich -->
+    <section class="content" aria-labelledby="list-heading">
+      <h2 id="list-heading" class="visually-hidden">Produktliste</h2>
+
+      <div class="table-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" style="width:2rem;">
+                <input type="checkbox" aria-label="Alle auswählen"/>
+              </th>
+              <th scope="col">Name</th>
+              <th scope="col">Kategorie</th>
+              <th scope="col">Standard</th>
+              <th scope="col">Geändert</th>
+              <th scope="col" class="actions-col">Aktionen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 6 Beispielzeilen -->
+            <tr>
+              <td><input type="checkbox" aria-label="Produkt auswählen"/></td>
+              <td><a href="#detail">Grill</a></td>
+              <td><span class="badge">Hardware</span></td>
+              <td><input type="checkbox" checked disabled aria-label="Standard"/></td>
+              <td><time datetime="2025-08-18">18.08.2025</time></td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><a href="#detail">Tisch</a></td>
+              <td><span class="badge">Ausstattung</span></td>
+              <td><input type="checkbox" disabled/></td>
+              <td><time datetime="2025-08-12">12.08.2025</time></td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><a href="#detail">Zelt</a></td>
+              <td><span class="badge">Ausstattung</span></td>
+              <td><input type="checkbox" checked disabled/></td>
+              <td><time datetime="2025-08-05">05.08.2025</time></td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><a href="#detail">Kohle</a></td>
+              <td><span class="badge">Verbrauch</span></td>
+              <td><input type="checkbox" disabled/></td>
+              <td><time datetime="2025-07-28">28.07.2025</time></td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><a href="#detail">Bierzeltgarnitur</a></td>
+              <td><span class="badge">Ausstattung</span></td>
+              <td><input type="checkbox" disabled/></td>
+              <td><time datetime="2025-07-15">15.07.2025</time></td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><a href="#detail">Gasbrenner</a></td>
+              <td><span class="badge">Hardware</span></td>
+              <td><input type="checkbox" disabled/></td>
+              <td><time datetime="2025-07-10">10.07.2025</time></td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+
+            <!-- Platzhalter: Nachlade-Indikatoren (später per JS ein-/ausblenden) -->
+            <tr class="infinite-loader">
+              <td colspan="6">Lade weitere Produkte …</td>
+            </tr>
+            <tr class="infinite-end">
+              <td colspan="6">Keine weiteren Produkte</td>
+            </tr>
+            <tr class="infinite-error">
+              <td colspan="6">Fehler beim Laden. <a href="#retry">Erneut versuchen</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Rechte Seitenleiste: Drawer (ohne Events-Block) -->
+    <aside class="drawer" aria-labelledby="drawer-title">
+      <h2 id="drawer-title">Produkt: Grill</h2>
+      <p><strong>Kategorie:</strong> <span class="badge">Hardware</span></p>
+      <p><strong>Standard:</strong> ✔</p>
+
+      <div class="drawer-actions">
+        <a href="#bearbeiten" class="btn">Bearbeiten</a>
+        <a href="#loeschen" class="btn btn-danger">Löschen</a>
+      </div>
+
+      <hr/>
+      <p class="meta">
+        Zuletzt geändert: <time datetime="2025-08-18">18.08.2025</time>
+      </p>
+    </aside>
+  </main>
+
+  <!-- (Modal bleibt wie gehabt, optional) -->
+</body>
+</html>

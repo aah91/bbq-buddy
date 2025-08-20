@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>bbq buddy – Events</title>
+  <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+  <!-- Kopf -->
+  <header class="header">
+    <h1 id="page-title">Events</h1>
+    <p class="subtitle">Plane und verwalte deine Events</p>
+  </header>
+
+  <!-- Toolbar (sticky) -->
+  <section class="toolbar toolbar--sticky" aria-label="Eventwerkzeuge">
+    <div class="toolbar-left">
+      <a href="#new-event" class="btn btn-primary">+ Neues Event</a>
+    </div>
+    <div class="toolbar-right">
+      <label for="range" class="visually-hidden">Zeitraum</label>
+      <select id="range">
+        <option value="">Zeitraum: Alle</option>
+        <option>Heute</option>
+        <option>Diese Woche</option>
+        <option>Diesen Monat</option>
+        <option>Nächstes Quartal</option>
+      </select>
+
+      <label class="checkbox-inline" title="Nur zukünftige Events zeigen">
+        <input type="checkbox" id="only-future" />
+        Nur zukünftige Events
+      </label>
+    </div>
+  </section>
+
+  <!-- Layout: Listen links, Drawer rechts -->
+  <main class="layout">
+    <section class="content" aria-labelledby="open-events-heading">
+      <!-- Offene Events -->
+      <h2 id="open-events-heading" style="margin:1rem 2rem 0.25rem;">Offene Events</h2>
+      <p style="margin:0 2rem 0.5rem;color:#666;font-size:.95rem;">
+        Status: Offen · Bestellbar · Geschlossen · Rechnung offen
+      </p>
+
+      <div class="table-scroll" aria-label="Offene Events (scrollbar)">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" style="width:2rem;"><input type="checkbox" aria-label="Alle auswählen"/></th>
+              <th scope="col">Datum</th>
+              <th scope="col">Bestelldeadline</th>
+              <th scope="col">Produkte</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="actions-col">Aktionen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Beispielzeilen -->
+            <tr>
+              <td><input type="checkbox" aria-label="Event auswählen"/></td>
+              <td><time datetime="2025-08-22">22.08.2025</time></td>
+              <td><time datetime="2025-08-20T18:00">20.08.2025 18:00</time></td>
+              <td>7</td>
+              <td>Offen</td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#duplizieren">Duplizieren</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><time datetime="2025-09-10">10.09.2025</time></td>
+              <td><time datetime="2025-09-07T23:59">07.09.2025 23:59</time></td>
+              <td>4</td>
+              <td>Bestellbar</td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#duplizieren">Duplizieren</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><time datetime="2025-10-01">01.10.2025</time></td>
+              <td><time datetime="2025-09-27T12:00">27.09.2025 12:00</time></td>
+              <td>9</td>
+              <td>Geschlossen</td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#duplizieren">Duplizieren</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><time datetime="2025-11-14">14.11.2025</time></td>
+              <td><time datetime="2025-11-10T17:00">10.11.2025 17:00</time></td>
+              <td>6</td>
+              <td>Rechnung offen</td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#duplizieren">Duplizieren</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+
+            <!-- Platzhalter für Nachlade-/Ende-/Fehlerzeilen -->
+            <tr class="infinite-loader"><td colspan="6">Lade weitere Events …</td></tr>
+            <tr class="infinite-end"><td colspan="6">Keine weiteren Events</td></tr>
+            <tr class="infinite-error"><td colspan="6">Fehler beim Laden. <a href="#retry">Erneut versuchen</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Abgeschlossene Events -->
+      <h2 id="closed-events-heading" style="margin:1rem 2rem 0.25rem;">Abgeschlossene Events</h2>
+      <p style="margin:0 2rem 0.5rem;color:#666;font-size:.95rem;">
+        Status: Zahlung offen · Abgerechnet
+      </p>
+
+      <div class="table-scroll" aria-label="Abgeschlossene Events (scrollbar)">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" style="width:2rem;"><input type="checkbox" aria-label="Alle auswählen"/></th>
+              <th scope="col">Datum</th>
+              <th scope="col">Bestelldeadline</th>
+              <th scope="col">Produkte</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="actions-col">Aktionen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><time datetime="2025-12-18">18.12.2025</time></td>
+              <td><time datetime="2025-12-14T20:00">14.12.2025 20:00</time></td>
+              <td>8</td>
+              <td>Zahlung offen</td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#duplizieren">Duplizieren</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td><time datetime="2025-12-31">31.12.2025</time></td>
+              <td><time datetime="2025-12-28T12:00">28.12.2025 12:00</time></td>
+              <td>10</td>
+              <td>Abgerechnet</td>
+              <td class="row-actions"><a href="#ansehen">Ansehen</a> · <a href="#bearbeiten">Bearbeiten</a> · <a href="#duplizieren">Duplizieren</a> · <a href="#loeschen">Löschen</a></td>
+            </tr>
+
+            <tr class="infinite-end"><td colspan="6">Keine weiteren Events</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Detail-Drawer (rechts) -->
+    <aside class="drawer" aria-labelledby="drawer-title">
+      <h2 id="drawer-title">Eventdetails</h2>
+      <p><strong>Eventdatum:</strong> <time datetime="2025-08-22">22.08.2025</time></p>
+      <p><strong>Bestelldeadline:</strong> <time datetime="2025-08-20T18:00">20.08.2025, 18:00</time></p>
+      <p><strong>Status:</strong> Bestellbar</p>
+
+      <h3 style="margin-top:1rem;">Produkte (7)</h3>
+      <ul>
+        <li>Grill <span class="badge">Standard</span></li>
+        <li>Zelt <span class="badge">Standard</span></li>
+        <li>Kohle</li>
+        <li>Tisch</li>
+        <li>Bierzeltgarnitur</li>
+        <li>Gasbrenner</li>
+        <li>Servietten</li>
+      </ul>
+
+      <div class="drawer-actions" style="margin-top:1rem;">
+        <a href="#bearbeiten" class="btn">Bearbeiten</a>
+        <a href="#duplizieren" class="btn">Duplizieren</a>
+        <a href="#loeschen" class="btn btn-danger">Löschen</a>
+      </div>
+
+      <hr/>
+      <p class="meta">Zuletzt geändert: <time datetime="2025-08-18">18.08.2025</time></p>
+    </aside>
+  </main>
+
+  <!-- Modal: Neues Event -->
+  <section class="modal" id="new-event" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 id="modal-title">Neues Event</h2>
+      </header>
+
+      <div class="modal-body">
+        <div class="form-row">
+          <label for="ev-date">Eventdatum</label>
+          <input id="ev-date" type="date" />
+        </div>
+
+        <div class="form-row">
+          <label for="ev-time">Uhrzeit (optional)</label>
+          <input id="ev-time" type="time" />
+        </div>
+
+        <div class="form-row">
+          <label for="deadline-date">Bestelldeadline – Datum</label>
+          <input id="deadline-date" type="date" />
+        </div>
+
+        <div class="form-row">
+          <label for="deadline-time">Bestelldeadline – Uhrzeit</label>
+          <input id="deadline-time" type="time" />
+        </div>
+
+        <div class="form-row">
+          <label for="ev-status">Status</label>
+          <select id="ev-status">
+            <option>Offen</option>
+            <option>Bestellbar</option>
+            <option>Geschlossen</option>
+            <option>Rechnung offen</option>
+            <option>Zahlung offen</option>
+            <option>Abgerechnet</option>
+          </select>
+        </div>
+
+        <hr style="margin:1rem 0;"/>
+
+        <h3>Zugeordnete Produkte</h3>
+        <div class="table-wrap" style="margin-top:0.5rem;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Produktname</th>
+                <th>Kategorie</th>
+                <th>Standard</th>
+                <th style="width:7rem;">Entfernen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Grill</td>
+                <td><span class="badge">Hardware</span></td>
+                <td>✔</td>
+                <td><a href="#remove">[–]</a></td>
+              </tr>
+              <tr>
+                <td>Zelt</td>
+                <td><span class="badge">Ausstattung</span></td>
+                <td>✔</td>
+                <td><a href="#remove">[–]</a></td>
+              </tr>
+              <tr>
+                <td>Tisch</td>
+                <td><span class="badge">Ausstattung</span></td>
+                <td>–</td>
+                <td><a href="#remove">[–]</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-row" style="margin-top:1rem;">
+          <label for="product-search">Produkt hinzufügen</label>
+          <input id="product-search" type="search" placeholder="Suche in Library" />
+        </div>
+
+        <div class="table-wrap" style="margin-top:0.5rem;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:4rem;">Hinzufügen</th>
+                <th>Produkt</th>
+                <th>Kategorie</th>
+                <th>Standard</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="#add">[ + ]</a></td>
+                <td>Bierzeltgarnitur</td>
+                <td><span class="badge">Ausstattung</span></td>
+                <td>–</td>
+              </tr>
+              <tr>
+                <td><a href="#add">[ + ]</a></td>
+                <td>Gasbrenner</td>
+                <td><span class="badge">Hardware</span></td>
+                <td>–</td>
+              </tr>
+              <tr>
+                <td><a href="#add">[ + ]</a></td>
+                <td>Servietten</td>
+                <td><span class="badge">Verbrauch</span></td>
+                <td>–</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <a href="#" class="btn btn-primary">Speichern</a>
+        <a href="#" class="btn btn-danger">Abbrechen</a>
+      </footer>
+    </div>
+  </section>
+
+  <!-- Fußnavigation (optional) -->
+  <footer class="footer">
+    <nav>
+      <a href="organizer-dashboard.html">Zurück zum Organizer‑Dashboard</a>
+      <span aria-hidden="true">·</span>
+      <a href="../index.html">Startseite</a>
+    </nav>
+  </footer>
+</body>
+</html>
